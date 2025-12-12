@@ -25,11 +25,11 @@ const HomeInterface: React.FC<HomeInterfaceProps> = ({ tools, onSelectTool, lang
       {/* Hero Section */}
       <div className="text-center space-y-6 py-10">
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-zinc-900/50 border border-zinc-800 backdrop-blur-sm mb-4">
-          <Sparkles size={16} className="text-blue-400" />
+          <Sparkles size={16} className="text-lime-400" />
           <span className="text-xs font-medium text-zinc-400 tracking-wider uppercase">{t('home.new_features')}</span>
         </div>
         <h1 className="text-5xl md:text-7xl font-bold tracking-tight text-white">
-          {t('home.hero_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-600">{t('home.hero_title_2')}</span>
+          {t('home.hero_title_1')} <span className="text-transparent bg-clip-text bg-gradient-to-r from-lime-400 to-emerald-600">{t('home.hero_title_2')}</span>
         </h1>
         <p className="text-lg text-zinc-400 max-w-2xl mx-auto leading-relaxed">
           {t('home.hero_subtitle')}
@@ -41,13 +41,14 @@ const HomeInterface: React.FC<HomeInterfaceProps> = ({ tools, onSelectTool, lang
         {featureTools.map((tool) => {
           // Logic matching the Sidebar
           const isProductPhoto = tool.id === ToolType.ProductPhoto;
+          const isMockup = tool.id === ToolType.Mockup;
           
-          // Only ProductPhoto is active (Home is filtered out of featureTools)
-          const isActive = isProductPhoto;
+          // Active tools
+          const isActive = isProductPhoto || isMockup;
           const isDisabled = !isActive;
 
           // Badges
-          const showNewBadge = isProductPhoto;
+          const showNewBadge = isProductPhoto || isMockup;
           const showSoonBadge = isDisabled;
 
           return (
@@ -65,7 +66,7 @@ const HomeInterface: React.FC<HomeInterfaceProps> = ({ tools, onSelectTool, lang
             >
               {/* Hover Gradient Background */}
               {!isDisabled && (
-                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute inset-0 bg-gradient-to-br from-lime-500/10 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               )}
               
               <div className="relative z-10 w-full flex flex-col h-full">
@@ -86,7 +87,7 @@ const HomeInterface: React.FC<HomeInterfaceProps> = ({ tools, onSelectTool, lang
                             {t('home.soon_badge')}
                          </span>
                       ) : (
-                         <span className="flex items-center justify-center text-[9px] font-extrabold tracking-wider text-emerald-500 bg-zinc-950 px-1.5 py-0.5 rounded border border-emerald-500/30">
+                         <span className="flex items-center justify-center text-[9px] font-extrabold tracking-wider text-lime-500 bg-zinc-950 px-1.5 py-0.5 rounded border border-lime-500/30">
                             {t('home.new')}
                          </span>
                       )}
@@ -94,7 +95,7 @@ const HomeInterface: React.FC<HomeInterfaceProps> = ({ tools, onSelectTool, lang
                   )}
                 </div>
                 
-                <h3 className={`text-lg font-semibold mb-2 transition-colors ${isDisabled ? 'text-zinc-500' : 'text-white group-hover:text-blue-100'}`}>
+                <h3 className={`text-lg font-semibold mb-2 transition-colors ${isDisabled ? 'text-zinc-500' : 'text-white group-hover:text-lime-200'}`}>
                   {tool.label}
                 </h3>
                 
@@ -106,7 +107,7 @@ const HomeInterface: React.FC<HomeInterfaceProps> = ({ tools, onSelectTool, lang
                   flex items-center text-xs font-bold tracking-widest uppercase mt-auto pt-4 border-t w-full transition-colors
                   ${isDisabled 
                     ? 'border-zinc-800/30 text-zinc-700' 
-                    : 'border-zinc-800/50 text-zinc-600 group-hover:text-blue-400'
+                    : 'border-zinc-800/50 text-zinc-600 group-hover:text-lime-400'
                   }
                 `}>
                   {isDisabled ? t('home.soon') : t('home.launch')}

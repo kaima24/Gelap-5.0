@@ -217,7 +217,7 @@ const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey, onUsageUpda
                 value={prompt}
                 onChange={(e) => setPrompt(e.target.value)}
                 placeholder={tool.promptPlaceholder}
-                className="w-full bg-black/40 border border-zinc-800 rounded-lg p-4 text-zinc-200 text-sm focus:outline-none focus:ring-1 focus:ring-zinc-600 min-h-[140px] resize-none placeholder-zinc-700 backdrop-blur-sm"
+                className="w-full bg-black/40 border border-zinc-800 rounded-lg p-4 text-zinc-200 text-sm focus:outline-none focus:ring-1 focus:ring-lime-500/50 min-h-[140px] resize-none placeholder-zinc-700 backdrop-blur-sm"
               />
             </div>
 
@@ -270,7 +270,7 @@ const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey, onUsageUpda
                       className={`
                         p-3 rounded-full backdrop-blur-md border transition-all flex items-center gap-2
                         ${isSaved 
-                          ? 'bg-emerald-500/20 border-emerald-500/50 text-emerald-400' 
+                          ? 'bg-lime-500/20 border-lime-500/50 text-lime-400' 
                           : 'bg-black/80 hover:bg-zinc-800 text-white border-zinc-800'
                         }
                       `}

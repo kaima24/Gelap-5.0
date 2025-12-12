@@ -148,14 +148,16 @@ INPUT DATA:
 
 CRITICAL ANALYSIS INSTRUCTIONS:
 1. PRODUCT ISOLATION: Focus ONLY on the main product object in the "Product Image". IGNORE hands holding it, table surfaces, background clutter, or any other objects. The prompt must describe the product cleanly.
-2. IF STYLE REFERENCE IS PROVIDED: Analyze its lighting, composition, and mood. Write a prompt that places the *isolated* product into that exact style.
-3. IF STYLE REFERENCE IS MISSING: You MUST invent a "High-End Professional Commercial Advertisement" scene. 
+2. SCALE & PROPORTION ANALYSIS: Estimate the real-world size of the product based on visual cues (e.g., compared to a hand, cap size, or standard packaging). Explicitly state if it is small (like a lipstick), medium (like a soda can), or large.
+3. IF STYLE REFERENCE IS PROVIDED: Analyze its lighting, composition, and mood. Write a prompt that places the *isolated* product into that exact style.
+4. IF STYLE REFERENCE IS MISSING: You MUST invent a "High-End Professional Commercial Advertisement" scene. 
    - Style: Hyper-realistic, 8k resolution, award-winning photography.
    - Context: Place the product in a creative, relevant, and stunning environment (e.g., splashing water for drinks, floating geometry for tech, podiums for beauty).
    - Lighting: Cinematic, perfectly balanced studio lighting.
 
 TASK:
 Write a single, highly detailed, descriptive prompt.
+- Include a specific instruction on the product's scale relative to the environment.
 - Focus on describing the lighting, textures, composition, and product placement.
 - Include the specific camera details provided.
 - Output ONLY the prompt text. Do not add "Here is the prompt:" or markdown formatting.

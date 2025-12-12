@@ -93,14 +93,14 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ onSubmit, logoSrc, onClose })
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Tag size={16} className="text-zinc-500 group-focus-within:text-blue-400 transition-colors" />
+                  <Tag size={16} className="text-zinc-500 group-focus-within:text-lime-400 transition-colors" />
                 </div>
                 <input
                   type="text"
                   value={projectName}
                   onChange={(e) => setProjectName(e.target.value)}
                   placeholder="e.g. My Creative Studio"
-                  className="w-full bg-black/50 border border-zinc-800 rounded-xl py-3 pl-10 pr-4 text-white placeholder-zinc-700 focus:outline-none focus:ring-2 focus:ring-blue-500/50 focus:border-blue-500/50 transition-all"
+                  className="w-full bg-black/50 border border-zinc-800 rounded-xl py-3 pl-10 pr-4 text-white placeholder-zinc-700 focus:outline-none focus:ring-2 focus:ring-lime-500/50 focus:border-lime-500/50 transition-all"
                   autoFocus
                 />
               </div>
@@ -113,7 +113,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ onSubmit, logoSrc, onClose })
               </label>
               <div className="relative group">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Key size={16} className={`transition-colors ${error ? 'text-red-500' : 'text-zinc-500 group-focus-within:text-blue-400'}`} />
+                  <Key size={16} className={`transition-colors ${error ? 'text-red-500' : 'text-zinc-500 group-focus-within:text-lime-400'}`} />
                 </div>
                 <input
                   type="password"
@@ -128,7 +128,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ onSubmit, logoSrc, onClose })
                     w-full bg-black/50 border rounded-xl py-3 pl-10 pr-4 text-white placeholder-zinc-700 focus:outline-none focus:ring-2 transition-all disabled:opacity-50 disabled:cursor-not-allowed
                     ${error 
                       ? 'border-red-900/50 focus:border-red-500 focus:ring-red-500/20' 
-                      : 'border-zinc-800 focus:ring-blue-500/50 focus:border-blue-500/50'
+                      : 'border-zinc-800 focus:ring-lime-500/50 focus:border-lime-500/50'
                     }
                   `}
                 />
@@ -172,7 +172,7 @@ const ApiKeyModal: React.FC<ApiKeyModalProps> = ({ onSubmit, logoSrc, onClose })
              href="https://aistudio.google.com/app/apikey" 
              target="_blank" 
              rel="noopener noreferrer"
-             className="inline-flex items-center justify-center gap-2 text-xs text-blue-400 hover:text-blue-300 transition-colors"
+             className="inline-flex items-center justify-center gap-2 text-xs text-lime-400 hover:text-lime-300 transition-colors"
            >
              Get your API Key here <ExternalLink size={12} />
            </a>
