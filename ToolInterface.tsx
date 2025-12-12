@@ -7,10 +7,9 @@ import { saveAsset } from '../services/storageService';
 interface ToolInterfaceProps {
   tool: ToolConfig;
   apiKey: string;
-  onUsageUpdate?: () => void;
 }
 
-const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey, onUsageUpdate }) => {
+const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey }) => {
   const [prompt, setPrompt] = useState('');
   const [isGenerating, setIsGenerating] = useState(false);
   const [resultImage, setResultImage] = useState<string | null>(null);
@@ -89,10 +88,6 @@ const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey, onUsageUpda
 
       const generatedImageBase64 = await generateCreativeImage(finalPrompt, apiKey, imageBase64);
       setResultImage(generatedImageBase64);
-      
-      // Increment Usage on success
-      if (onUsageUpdate) onUsageUpdate();
-      
     } catch (err: any) {
       setError(err.message || "Failed to generate image. Please try again.");
     } finally {
@@ -100,33 +95,14 @@ const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey, onUsageUpda
     }
   };
 
-  const handleDownload = async () => {
+  const handleDownload = () => {
     if (resultImage) {
-      try {
-        const response = await fetch(resultImage);
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const link = document.createElement('a');
-        link.href = url;
-        link.download = `gelap-export-${Date.now()}.png`;
-        document.body.appendChild(link);
-        link.click();
-        
-        // Cleanup
-        setTimeout(() => {
-          document.body.removeChild(link);
-          window.URL.revokeObjectURL(url);
-        }, 100);
-      } catch (e) {
-        console.error("Download failed:", e);
-        // Fallback
-        const link = document.createElement('a');
-        link.href = resultImage;
-        link.download = `gelap-export-${Date.now()}.png`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      }
+      const link = document.createElement('a');
+      link.href = resultImage;
+      link.download = `gelap-export-${Date.now()}.png`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
