@@ -181,7 +181,7 @@ const RebrandStudio: React.FC<RebrandStudioProps> = ({ apiKey, onUsageUpdate, la
   const handleDownload = (url: string) => {
     const link = document.createElement('a');
     link.href = url;
-    link.download = `gelap-rebrand-${Date.now()}.png`;
+    link.download = `Gelap5-RebrandStudio_${Date.now()}.png`;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

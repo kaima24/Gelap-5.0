@@ -401,7 +401,7 @@ const MockupStudio: React.FC<MockupStudioProps> = ({ apiKey, onUsageUpdate, lang
     try {
       const link = document.createElement('a');
       link.href = url;
-      link.download = `gelap-mockup-${Date.now()}.png`;
+      link.download = `Gelap5-MockupStudio_${Date.now()}.png`;
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);

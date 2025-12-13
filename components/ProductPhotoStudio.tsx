@@ -249,7 +249,7 @@ const ProductPhotoStudio: React.FC<ProductPhotoStudioProps> = ({ apiKey, onUsage
 
   const handleStopGeneration = () => {
     abortRef.current = true;
-    setGenerationStatus(t('ps.stopped'));
+    setGenerationStatus(t('prod.stopped'));
   };
 
   const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
@@ -257,11 +257,11 @@ const ProductPhotoStudio: React.FC<ProductPhotoStudioProps> = ({ apiKey, onUsage
   // --- MASTER FUNCTION ---
   const handleAnalyzeAndGenerate = async () => {
     if (!apiKey) {
-      setError(t('ps.error_api'));
+      setError(t('prod.error_api'));
       return;
     }
     if (productImages.length === 0) {
-      setError(t('ps.error_img'));
+      setError(t('prod.error_img'));
       return;
     }
 
@@ -269,7 +269,7 @@ const ProductPhotoStudio: React.FC<ProductPhotoStudioProps> = ({ apiKey, onUsage
     abortRef.current = false;
     setError(null);
     setIsSaved(false);
-    setGenerationStatus(t('ps.analyzing'));
+    setGenerationStatus(t('prod.analyzing'));
 
     try {
       // SELECTION LOGIC for Product Variants
@@ -373,7 +373,7 @@ const ProductPhotoStudio: React.FC<ProductPhotoStudioProps> = ({ apiKey, onUsage
 
     } catch (err: any) {
       if (err.message === "Stopped by user") {
-         setGenerationStatus(t('ps.stopped'));
+         setGenerationStatus(t('prod.stopped'));
       } else {
          console.error(err);
          setError(err.message || "Process failed.");
@@ -406,11 +406,11 @@ PROMPT: ${promptText}
     for (let i = 0; i < imageCount; i++) {
         if (abortRef.current) break;
         if (!checkDailyLimit()) {
-          setError(t('ps.error_limit'));
+          setError(t('prod.error_limit'));
           break;
         }
 
-        setGenerationStatus(`${t('ps.status_gen')} ${i + 1} of ${imageCount}...`);
+        setGenerationStatus(`${t('prod.status_gen')} ${i + 1} of ${imageCount}...`);
         
         let currentPrompt = baseInstruction;
         let variationNote = "";
@@ -464,7 +464,7 @@ PROMPT: ${promptText}
         if (i < imageCount - 1) {
            for (let s = 15; s > 0; s--) {
              if (abortRef.current) break;
-             setGenerationStatus(`${t('ps.status_cool')} ${s}s`);
+             setGenerationStatus(`${t('prod.status_cool')} ${s}s`);
              await delay(1000);
            }
         }
@@ -538,14 +538,14 @@ PROMPT: ${promptText}
       const url = window.URL.createObjectURL(blob);
       const link = document.createElement('a');
       link.href = url;
-      link.download = `gelap-product-hq-${Date.now()}.png`;
+      link.download = `Gelap5-ProductStudio_${Date.now()}.png`;
       document.body.appendChild(link);
       link.click();
       setTimeout(() => { document.body.removeChild(link); window.URL.revokeObjectURL(url); }, 100);
     } catch (err) {
       const link = document.createElement('a');
       link.href = imgUrl;
-      link.download = `gelap-product-hq-${Date.now()}.png`;
+      link.download = `Gelap5-ProductStudio_${Date.now()}.png`;
       link.target = "_blank";
       document.body.appendChild(link);
       link.click();
@@ -569,8 +569,8 @@ PROMPT: ${promptText}
 
       {/* Header */}
       <div className="text-center mb-10">
-        <h1 className="text-3xl font-bold text-white mb-2">{t('ps.title')}</h1>
-        <p className="text-zinc-400">{t('ps.subtitle')}</p>
+        <h1 className="text-3xl font-bold text-white mb-2">{t('prod.title')}</h1>
+        <p className="text-zinc-400">{t('prod.subtitle')}</p>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 relative">
@@ -581,9 +581,9 @@ PROMPT: ${promptText}
           {/* 1. Assets */}
           <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 backdrop-blur-sm">
             <div className="flex items-center justify-between mb-4">
-               <h3 className="text-white font-semibold">{t('ps.step1')}</h3>
+               <h3 className="text-white font-semibold">{t('prod.step1')}</h3>
                <button onClick={() => setUseStyleRef(!useStyleRef)} className="flex items-center gap-2 text-xs font-medium text-zinc-400 hover:text-white transition-colors">
-                 <span>{t('ps.use_style')}</span>
+                 <span>{t('prod.use_style')}</span>
                  {useStyleRef ? <ToggleRight className="text-lime-500" size={24} /> : <ToggleLeft className="text-zinc-600" size={24} />}
                </button>
             </div>
@@ -620,14 +620,14 @@ PROMPT: ${promptText}
                         </div>
                      </div>
                      <div className="mt-2 text-center">
-                        <span className="text-[10px] bg-black/60 text-white px-2 py-1 rounded-full">{productImages.length} {t('ps.prod_img')}</span>
+                        <span className="text-[10px] bg-black/60 text-white px-2 py-1 rounded-full">{productImages.length} {t('prod.prod_img')}</span>
                      </div>
                   </div>
                 ) : (
                   <div className="text-center p-4">
                      <Upload className="mx-auto mb-2 text-zinc-500 group-hover:text-zinc-300" size={24} />
-                     <p className="text-xs text-zinc-500 font-medium">{t('ps.prod_img')}</p>
-                     <p className="text-[10px] text-zinc-600 mt-1">{t('ps.prod_img_hint')}</p>
+                     <p className="text-xs text-zinc-500 font-medium">{t('prod.prod_img')}</p>
+                     <p className="text-[10px] text-zinc-600 mt-1">{t('prod.prod_img_hint')}</p>
                   </div>
                 )}
                 <input ref={productInputRef} type="file" className="hidden" accept="image/*" multiple onChange={handleProductUpload} />
@@ -636,7 +636,8 @@ PROMPT: ${promptText}
               {/* Style Reference Upload */}
               {useStyleRef && (
                 <div 
-                  className={`relative border-2 border-dashed rounded-lg h-full min-h-[160px] flex flex-col items-center justify-center cursor-pointer transition-colors group ${styleImage ? 'border-zinc-700 bg-zinc-900' : 'border-zinc-700 hover:border-zinc-500 hover:bg-zinc-800/50'}`}
+                  className={`relative border-2 border-dashed rounded-lg h-full min-h-[160px] flex flex-col items-center justify-center cursor-pointer transition-colors group ${styleImage ? 'border-zinc-700 bg-zinc-900' : 'border-zinc-700 hover:border-zinc-500 hover:bg-zinc-800/50'}
+                  `}
                   onClick={() => !styleImage && styleInputRef.current?.click()}
                 >
                   {styleImage ? (
@@ -644,13 +645,13 @@ PROMPT: ${promptText}
                       <img src={styleImage.preview} alt="Style" className="h-full w-full object-contain p-2 max-h-[160px]" />
                       <button onClick={(e) => { e.stopPropagation(); removeStyleImage(); }} className="absolute top-2 right-2 p-1 bg-black/60 rounded-full hover:bg-red-500/80 transition-colors"><X size={14} className="text-white" /></button>
                       <div className="absolute bottom-2 left-0 right-0 text-center">
-                        <span className="text-[10px] bg-black/60 text-white px-2 py-1 rounded-full">{t('ps.style_ref')}</span>
+                        <span className="text-[10px] bg-black/60 text-white px-2 py-1 rounded-full">{t('prod.style_ref')}</span>
                       </div>
                     </>
                   ) : (
                     <div className="text-center p-4">
                        <ImagePlus className="mx-auto mb-2 text-zinc-500 group-hover:text-zinc-300" size={24} />
-                       <p className="text-xs text-zinc-500">{t('ps.style_ref')}</p>
+                       <p className="text-xs text-zinc-500">{t('prod.style_ref')}</p>
                     </div>
                   )}
                   <input ref={styleInputRef} type="file" className="hidden" accept="image/*" onChange={handleStyleUpload} />
@@ -665,7 +666,7 @@ PROMPT: ${promptText}
                    <div className="flex items-center justify-between">
                      <div className="flex items-center gap-2">
                        <Tag size={16} className="text-zinc-400" />
-                       <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('ps.define_category')}</span>
+                       <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('prod.define_category')}</span>
                      </div>
                      <button onClick={() => setShowCategory(!showCategory)} className={`w-10 h-5 rounded-full relative transition-colors ${showCategory ? 'bg-lime-500' : 'bg-zinc-700'}`}>
                         <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${showCategory ? 'left-6' : 'left-1'}`} />
@@ -673,7 +674,7 @@ PROMPT: ${promptText}
                    </div>
                    {showCategory && (
                      <div className="mt-3 animate-fade-in">
-                        <label className="text-[10px] text-zinc-500 block mb-1">{t('ps.select_category')}</label>
+                        <label className="text-[10px] text-zinc-500 block mb-1">{t('prod.select_category')}</label>
                         <select 
                           value={selectedCategory} 
                           onChange={(e) => setSelectedCategory(e.target.value)} 
@@ -691,7 +692,7 @@ PROMPT: ${promptText}
                    <div className="flex items-center justify-between">
                      <div className="flex items-center gap-2">
                        <Leaf size={16} className="text-zinc-400" />
-                       <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('ps.add_ingredients')}</span>
+                       <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('prod.add_ingredients')}</span>
                      </div>
                      <button onClick={() => setShowIngredients(!showIngredients)} className={`w-10 h-5 rounded-full relative transition-colors ${showIngredients ? 'bg-lime-500' : 'bg-zinc-700'}`}>
                         <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${showIngredients ? 'left-6' : 'left-1'}`} />
@@ -719,7 +720,7 @@ PROMPT: ${promptText}
                           type="text" 
                           value={customIngredient} 
                           onChange={(e) => setCustomIngredient(e.target.value)}
-                          placeholder={t('ps.custom_ingredient')} 
+                          placeholder={t('prod.custom_ingredient')} 
                           className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-xs text-zinc-300 focus:border-lime-500/50" 
                         />
                      </div>
@@ -728,26 +729,26 @@ PROMPT: ${promptText}
             </div>
 
             <div className="mt-4">
-              <input type="text" value={initialPrompt} onChange={(e) => setInitialPrompt(e.target.value)} placeholder={t('ps.desc_placeholder')} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-zinc-600 placeholder-zinc-700" />
+              <input type="text" value={initialPrompt} onChange={(e) => setInitialPrompt(e.target.value)} placeholder={t('prod.desc_placeholder')} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2.5 text-sm text-zinc-200 focus:outline-none focus:border-zinc-600 placeholder-zinc-700" />
             </div>
           </div>
 
           {/* 2. Configure */}
           <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 backdrop-blur-sm space-y-6">
-             <h3 className="text-white font-semibold">{t('ps.step2')}</h3>
+             <h3 className="text-white font-semibold">{t('prod.step2')}</h3>
              
              {/* Product Quantity & Batch Size Row */}
              <div className="grid grid-cols-2 gap-6">
                 <div className="space-y-2">
                    <label className="text-xs text-zinc-400 font-medium flex justify-between">
-                     <span>{t('ps.batch_size')}</span>
+                     <span>{t('prod.batch_size')}</span>
                      <span className="text-lime-400">{imageCount}</span>
                    </label>
                    <input type="range" min="1" max="10" value={imageCount} onChange={(e) => setImageCount(parseInt(e.target.value))} className="w-full h-1.5 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-lime-500" />
                 </div>
                 <div className="space-y-2">
                    <label className="text-xs text-zinc-400 font-medium flex justify-between">
-                     <span>{t('ps.product_qty')}</span>
+                     <span>{t('prod.product_qty')}</span>
                      <span className="text-blue-400">{productQuantity}</span>
                    </label>
                    <input type="range" min="1" max="20" value={productQuantity} onChange={(e) => setProductQuantity(parseInt(e.target.value))} className="w-full h-1.5 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-blue-500" />
@@ -759,7 +760,7 @@ PROMPT: ${promptText}
                <div className="flex items-center justify-between mb-3">
                  <div className="flex items-center gap-2">
                    <User size={16} className="text-zinc-400" />
-                   <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('ps.add_model')}</span>
+                   <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('prod.add_model')}</span>
                  </div>
                  <button onClick={() => setIncludeModel(!includeModel)} className={`w-10 h-5 rounded-full relative transition-colors ${includeModel ? 'bg-blue-500' : 'bg-zinc-700'}`}>
                     <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${includeModel ? 'left-6' : 'left-1'}`} />
@@ -769,23 +770,23 @@ PROMPT: ${promptText}
                {includeModel && (
                  <div className="grid grid-cols-2 gap-4 animate-fade-in mt-4">
                    <div className="space-y-1">
-                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('ps.model_gender')}</label>
+                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('prod.model_gender')}</label>
                       <select value={modelConfig.gender} onChange={e => setModelConfig({...modelConfig, gender: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300">
                         <option>Female</option><option>Male</option>
                       </select>
                    </div>
                    <div className="space-y-1">
-                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('ps.model_age')}</label>
+                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('prod.model_age')}</label>
                       <input type="number" value={modelConfig.age} onChange={e => setModelConfig({...modelConfig, age: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300" />
                    </div>
                    <div className="space-y-1">
-                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('ps.model_race')}</label>
+                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('prod.model_race')}</label>
                       <select value={modelConfig.race} onChange={e => setModelConfig({...modelConfig, race: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300">
                         {MODEL_RACES.map(r => <option key={r}>{r}</option>)}
                       </select>
                    </div>
                    <div className="space-y-1">
-                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('ps.model_angle')}</label>
+                      <label className="text-[10px] text-zinc-500 uppercase font-bold">{t('prod.model_angle')}</label>
                       <select value={modelConfig.angle} onChange={e => setModelConfig({...modelConfig, angle: e.target.value})} className="w-full bg-zinc-950 border border-zinc-800 rounded px-2 py-1.5 text-xs text-zinc-300">
                         {MODEL_ANGLES.map(a => <option key={a}>{a}</option>)}
                       </select>
@@ -799,7 +800,7 @@ PROMPT: ${promptText}
                 <div className="flex items-center justify-between mb-2">
                    <div className="flex items-center gap-2">
                       <LayoutTemplate size={16} className="text-zinc-400" />
-                      <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('ps.use_template')}</span>
+                      <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('prod.use_template')}</span>
                    </div>
                    <button onClick={() => setUseTemplateRef(!useTemplateRef)} className={`w-10 h-5 rounded-full relative transition-colors ${useTemplateRef ? 'bg-lime-500' : 'bg-zinc-700'}`}>
                       <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${useTemplateRef ? 'left-6' : 'left-1'}`} />
@@ -811,13 +812,13 @@ PROMPT: ${promptText}
                     
                     {imageCount > 1 && (
                       <div className="p-2 bg-indigo-900/20 border border-indigo-500/30 rounded text-[10px] text-indigo-300 text-center">
-                         {t('ps.multi_select_hint')}
+                         {t('prod.multi_select_hint')}
                       </div>
                     )}
 
                     {/* Backgrounds */}
                     <div>
-                      <h4 className="text-[10px] text-zinc-500 uppercase font-bold mb-2 tracking-widest">{t('ps.category_bg')}</h4>
+                      <h4 className="text-[10px] text-zinc-500 uppercase font-bold mb-2 tracking-widest">{t('prod.category_bg')}</h4>
                       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2">
                         {BACKGROUND_TEMPLATES.map(t => (
                           <button 
@@ -833,14 +834,14 @@ PROMPT: ${promptText}
                          type="text"
                          value={customBg}
                          onChange={(e) => setCustomBg(e.target.value)}
-                         placeholder={t('ps.custom_bg_placeholder')}
+                         placeholder={t('prod.custom_bg_placeholder')}
                          className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2 py-1.5 text-[10px] text-zinc-300 focus:border-lime-500/50 focus:outline-none"
                       />
                     </div>
 
                     {/* Objects */}
                     <div>
-                      <h4 className="text-[10px] text-zinc-500 uppercase font-bold mb-2 tracking-widest">{t('ps.category_obj')}</h4>
+                      <h4 className="text-[10px] text-zinc-500 uppercase font-bold mb-2 tracking-widest">{t('prod.category_obj')}</h4>
                       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2">
                         {OBJECT_TEMPLATES.map(t => (
                           <button 
@@ -856,14 +857,14 @@ PROMPT: ${promptText}
                          type="text"
                          value={customObj}
                          onChange={(e) => setCustomObj(e.target.value)}
-                         placeholder={t('ps.custom_obj_placeholder')}
+                         placeholder={t('prod.custom_obj_placeholder')}
                          className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2 py-1.5 text-[10px] text-zinc-300 focus:border-blue-500/50 focus:outline-none"
                       />
                     </div>
 
                     {/* Vibes */}
                     <div>
-                      <h4 className="text-[10px] text-zinc-500 uppercase font-bold mb-2 tracking-widest">{t('ps.category_vibe')}</h4>
+                      <h4 className="text-[10px] text-zinc-500 uppercase font-bold mb-2 tracking-widest">{t('prod.category_vibe')}</h4>
                       <div className="grid grid-cols-3 sm:grid-cols-4 gap-2 mb-2">
                         {VIBE_TEMPLATES.map(t => (
                           <button 
@@ -879,7 +880,7 @@ PROMPT: ${promptText}
                          type="text"
                          value={customVibe}
                          onChange={(e) => setCustomVibe(e.target.value)}
-                         placeholder={t('ps.custom_vibe_placeholder')}
+                         placeholder={t('prod.custom_vibe_placeholder')}
                          className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-2 py-1.5 text-[10px] text-zinc-300 focus:border-purple-500/50 focus:outline-none"
                       />
                     </div>
@@ -890,7 +891,7 @@ PROMPT: ${promptText}
 
              {/* Aspect Ratio (Moved out of Manual Override) */}
              <div className="bg-zinc-900 p-3 rounded-lg border border-zinc-800/50">
-                <label className="text-xs text-zinc-400 font-bold uppercase tracking-wider block mb-2">{t('ps.aspect_ratio')}</label>
+                <label className="text-xs text-zinc-400 font-bold uppercase tracking-wider block mb-2">{t('prod.aspect_ratio')}</label>
                 <div className="grid grid-cols-3 gap-2">
                    {ASPECT_RATIOS.slice(1).map(opt => (
                      <button
@@ -917,7 +918,7 @@ PROMPT: ${promptText}
              <div className="flex flex-col gap-3">
                {/* Override Toggle */}
                <div className="flex items-center justify-between bg-zinc-900 p-2 rounded-lg border border-zinc-800/50">
-                  <span className="text-xs font-bold text-zinc-300 pl-2">{t('ps.manual')}</span>
+                  <span className="text-xs font-bold text-zinc-300 pl-2">{t('prod.manual')}</span>
                   <button onClick={() => setManualOverride(!manualOverride)} className={`w-10 h-5 rounded-full relative transition-colors ${manualOverride ? 'bg-lime-500' : 'bg-zinc-700'}`}>
                     <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${manualOverride ? 'left-6' : 'left-1'}`} />
                   </button>
@@ -926,13 +927,13 @@ PROMPT: ${promptText}
                {manualOverride && (
                  <div className="grid grid-cols-2 gap-3 animate-fade-in p-2 bg-zinc-950/50 rounded-lg border border-zinc-800">
                     <div className="col-span-2">
-                      <label className="text-[10px] text-zinc-500 block mb-1">{t('ps.lighting')}</label>
+                      <label className="text-[10px] text-zinc-500 block mb-1">{t('prod.lighting')}</label>
                       <select value={lighting} onChange={(e) => setLighting(e.target.value)} className="w-full bg-zinc-900 border border-zinc-800 rounded px-2 py-1 text-xs text-zinc-300">
                         {LIGHTING_STYLES.map(opt => <option key={opt.value} value={opt.value}>{opt.label}</option>)}
                       </select>
                     </div>
                     <div className="col-span-2">
-                       <label className="text-[10px] text-zinc-500 block mb-1">{t('ps.film_grain')}: {filmGrain}%</label>
+                       <label className="text-[10px] text-zinc-500 block mb-1">{t('prod.film_grain')}: {filmGrain}%</label>
                        <input type="range" min="0" max="100" value={filmGrain} onChange={(e) => setFilmGrain(parseInt(e.target.value))} className="w-full h-1 bg-zinc-700 rounded-lg appearance-none cursor-pointer accent-lime-500" />
                     </div>
                  </div>
@@ -942,7 +943,7 @@ PROMPT: ${promptText}
                <div className="flex items-center justify-between bg-zinc-900 p-2 rounded-lg border border-zinc-800/50">
                    <div className="flex items-center gap-2">
                       <ShieldCheck size={14} className="text-zinc-400" />
-                      <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('ps.preserve')}</span>
+                      <span className="text-xs font-bold text-zinc-300 uppercase tracking-wider">{t('prod.preserve')}</span>
                    </div>
                    <button onClick={() => setPreserveDetails(!preserveDetails)} className={`w-10 h-5 rounded-full relative transition-colors ${preserveDetails ? 'bg-lime-500' : 'bg-zinc-700'}`}>
                       <div className={`absolute top-1 w-3 h-3 bg-white rounded-full transition-all ${preserveDetails ? 'left-6' : 'left-1'}`} />
@@ -953,26 +954,26 @@ PROMPT: ${promptText}
 
           {/* 3. Actions */}
           <div className="bg-zinc-900/40 border border-zinc-800 rounded-xl p-5 backdrop-blur-sm">
-             <h3 className="text-white font-semibold mb-4">{t('ps.step3')}</h3>
+             <h3 className="text-white font-semibold mb-4">{t('prod.step3')}</h3>
              {isGenerating ? (
                <button onClick={handleStopGeneration} className="w-full py-4 rounded-lg font-bold text-sm tracking-wide transition-all uppercase shadow-lg flex flex-col items-center justify-center mb-4 bg-red-900/50 hover:bg-red-900 text-red-200 border border-red-800">
-                 <div className="flex items-center gap-2 mb-1"><Square size={14} fill="currentColor" /> <span>{t('ps.btn_stop')}</span></div>
+                 <div className="flex items-center gap-2 mb-1"><Square size={14} fill="currentColor" /> <span>{t('prod.btn_stop')}</span></div>
                  {generationStatus && <span className="text-[10px] normal-case opacity-80">{generationStatus}</span>}
                </button>
              ) : (
                <button onClick={handleAnalyzeAndGenerate} disabled={productImages.length === 0} className={`w-full py-4 rounded-lg font-bold text-sm tracking-wide transition-all uppercase shadow-lg flex flex-col items-center justify-center mb-4 ${productImages.length === 0 ? 'bg-zinc-800 text-zinc-500 cursor-not-allowed' : 'bg-[#406828] hover:bg-[#4d7a30] text-white shadow-[#406828]/20'}`}>
-                 <div className="flex items-center gap-2"><Wand2 size={18} /><span>{t('ps.btn_analyze_generate')}</span></div>
+                 <div className="flex items-center gap-2"><Wand2 size={18} /><span>{t('prod.btn_analyze_generate')}</span></div>
                </button>
              )}
              
              <div className="relative mb-4">
-               <textarea value={finalPrompt} onChange={(e) => setFinalPrompt(e.target.value)} placeholder={t('ps.prompt_placeholder')} readOnly={isGenerating} className={`w-full h-32 bg-zinc-800/50 border border-zinc-700 rounded-lg p-3 text-sm text-zinc-200 focus:outline-none focus:border-lime-500 resize-none placeholder-zinc-600 transition-opacity ${isGenerating ? 'opacity-70' : 'opacity-100'}`} />
-               <span className="absolute bottom-2 right-2 text-[10px] text-zinc-500 bg-black/40 px-2 py-1 rounded">{t('ps.editable')}</span>
+               <textarea value={finalPrompt} onChange={(e) => setFinalPrompt(e.target.value)} placeholder={t('prod.prompt_placeholder')} readOnly={isGenerating} className={`w-full h-32 bg-zinc-800/50 border border-zinc-700 rounded-lg p-3 text-sm text-zinc-200 focus:outline-none focus:border-lime-500 resize-none placeholder-zinc-600 transition-opacity ${isGenerating ? 'opacity-70' : 'opacity-100'}`} />
+               <span className="absolute bottom-2 right-2 text-[10px] text-zinc-500 bg-black/40 px-2 py-1 rounded">{t('prod.editable')}</span>
              </div>
 
              {finalPrompt && !isGenerating && (
                 <button onClick={handleRegenerate} className="w-full py-2 bg-zinc-800 hover:bg-zinc-700 text-zinc-300 text-xs font-semibold rounded-lg border border-zinc-700 transition-colors flex items-center justify-center gap-2">
-                   <RefreshCw size={14} /> {t('ps.btn_regenerate')}
+                   <RefreshCw size={14} /> {t('prod.btn_regenerate')}
                 </button>
              )}
              
@@ -987,7 +988,7 @@ PROMPT: ${promptText}
            <div className="sticky top-6 flex flex-col gap-6 max-h-[calc(100vh-3rem)] overflow-y-auto custom-scrollbar pr-2">
               {/* Output */}
               <div>
-                <h3 className="text-white font-semibold mb-4 text-center">{t('ps.output_title')}</h3>
+                <h3 className="text-white font-semibold mb-4 text-center">{t('prod.output_title')}</h3>
                 <div className="relative w-full aspect-square bg-zinc-950 border border-dashed border-zinc-700 rounded-xl flex items-center justify-center overflow-hidden group min-h-[400px]">
                     {generatedImage ? (
                       <>
@@ -999,13 +1000,13 @@ PROMPT: ${promptText}
                             </div>
                             <button onClick={() => handleSave()} className={`px-4 py-2 rounded-full backdrop-blur-md transition-colors flex items-center gap-2 font-medium text-sm ${isSaved ? 'bg-lime-500/20 text-lime-400 border border-lime-500/50' : 'bg-black/60 text-white hover:bg-black/80'}`}>
                               {isSaving ? <RefreshCw size={16} className="animate-spin" /> : isSaved ? <Check size={16} /> : <Save size={16} />}
-                              {isSaved ? t('ps.saved') : t('ps.save')}
+                              {isSaved ? t('prod.saved') : t('prod.save')}
                             </button>
                         </div>
                       </>
                     ) : (
                       <div className="text-center text-zinc-600 px-6">
-                        <p className="text-sm">{t('ps.output_placeholder')}</p>
+                        <p className="text-sm">{t('prod.output_placeholder')}</p>
                         {isGenerating && <Loader2 size={32} className="animate-spin mx-auto mt-4 text-lime-500" />}
                       </div>
                     )}
@@ -1016,7 +1017,7 @@ PROMPT: ${promptText}
               {history.length > 0 && (
                 <div className="pt-4 border-t border-zinc-800">
                   <div className="flex items-center justify-between mb-3 text-zinc-400">
-                    <div className="flex items-center gap-2"><Clock size={14} /><span className="text-xs font-semibold uppercase tracking-wider">{t('ps.history')}</span></div>
+                    <div className="flex items-center gap-2"><Clock size={14} /><span className="text-xs font-semibold uppercase tracking-wider">{t('prod.history')}</span></div>
                     <span className="text-[10px] bg-zinc-900 px-2 py-0.5 rounded-full border border-zinc-800">{history.length}</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2">
@@ -1035,7 +1036,7 @@ PROMPT: ${promptText}
         <div className="lg:hidden space-y-6">
            {/* Same content as sticky but not sticky */}
             <div>
-              <h3 className="text-white font-semibold mb-4 text-center">{t('ps.output_title')}</h3>
+              <h3 className="text-white font-semibold mb-4 text-center">{t('prod.output_title')}</h3>
               <div className="relative w-full aspect-square bg-zinc-950 border border-dashed border-zinc-700 rounded-xl flex items-center justify-center overflow-hidden group min-h-[400px]">
                   {generatedImage ? (
                     <>
@@ -1047,13 +1048,13 @@ PROMPT: ${promptText}
                           </div>
                           <button onClick={() => handleSave()} className={`px-4 py-2 rounded-full backdrop-blur-md transition-colors flex items-center gap-2 font-medium text-sm ${isSaved ? 'bg-lime-500/20 text-lime-400 border border-lime-500/50' : 'bg-black/60 text-white hover:bg-black/80'}`}>
                             {isSaving ? <RefreshCw size={16} className="animate-spin" /> : isSaved ? <Check size={16} /> : <Save size={16} />}
-                            {isSaved ? t('ps.saved') : t('ps.save')}
+                            {isSaved ? t('prod.saved') : t('prod.save')}
                           </button>
                       </div>
                     </>
                   ) : (
                     <div className="text-center text-zinc-600 px-6">
-                      <p className="text-sm">{t('ps.output_placeholder')}</p>
+                      <p className="text-sm">{t('prod.output_placeholder')}</p>
                       {isGenerating && <Loader2 size={32} className="animate-spin mx-auto mt-4 text-lime-500" />}
                     </div>
                   )}
@@ -1062,7 +1063,7 @@ PROMPT: ${promptText}
             {history.length > 0 && (
                 <div className="pt-4 border-t border-zinc-800">
                   <div className="flex items-center justify-between mb-3 text-zinc-400">
-                    <div className="flex items-center gap-2"><Clock size={14} /><span className="text-xs font-semibold uppercase tracking-wider">{t('ps.history')}</span></div>
+                    <div className="flex items-center gap-2"><Clock size={14} /><span className="text-xs font-semibold uppercase tracking-wider">{t('prod.history')}</span></div>
                     <span className="text-[10px] bg-zinc-900 px-2 py-0.5 rounded-full border border-zinc-800">{history.length}</span>
                   </div>
                   <div className="grid grid-cols-3 gap-2">

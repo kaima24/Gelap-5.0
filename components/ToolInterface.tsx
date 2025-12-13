@@ -108,7 +108,9 @@ const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey, onUsageUpda
         const url = window.URL.createObjectURL(blob);
         const link = document.createElement('a');
         link.href = url;
-        link.download = `gelap-export-${Date.now()}.png`;
+        // Construct filename using tool label
+        const featureName = tool.label.replace(/\s+/g, '');
+        link.download = `Gelap5-${featureName}_${Date.now()}.png`;
         document.body.appendChild(link);
         link.click();
         
@@ -122,7 +124,8 @@ const ToolInterface: React.FC<ToolInterfaceProps> = ({ tool, apiKey, onUsageUpda
         // Fallback
         const link = document.createElement('a');
         link.href = resultImage;
-        link.download = `gelap-export-${Date.now()}.png`;
+        const featureName = tool.label.replace(/\s+/g, '');
+        link.download = `Gelap5-${featureName}_${Date.now()}.png`;
         document.body.appendChild(link);
         link.click();
         document.body.removeChild(link);

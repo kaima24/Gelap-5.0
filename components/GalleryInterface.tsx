@@ -36,7 +36,9 @@ const GalleryInterface: React.FC = () => {
 
   const handleDownload = (asset: AssetItem, e?: React.MouseEvent) => {
     e?.stopPropagation();
-    const filename = `gelap-${asset.type}-${asset.timestamp}.png`;
+    // Create a safe filename from title or type
+    const safeTitle = asset.title ? asset.title.replace(/[^a-zA-Z0-9]/g, '') : (asset.type === 'generated' ? 'Generated' : 'Upload');
+    const filename = `Gelap5-${safeTitle}_${asset.timestamp}.png`;
     downloadAsset(asset.data, filename);
   };
 

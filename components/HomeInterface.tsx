@@ -39,16 +39,19 @@ const HomeInterface: React.FC<HomeInterfaceProps> = ({ tools, onSelectTool, lang
       {/* Tools Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {featureTools.map((tool) => {
-          // Logic matching the Sidebar
+          // Logic matching the Sidebar - Active Tools
           const isProductPhoto = tool.id === ToolType.ProductPhoto;
           const isMockup = tool.id === ToolType.Mockup;
+          const isPhotoStudio = tool.id === ToolType.PhotoStudio;
+          const isHireModel = tool.id === ToolType.HireModel;
+          const isCharacter = tool.id === ToolType.CharacterGenerator;
           
-          // Active tools
-          const isActive = isProductPhoto || isMockup;
+          // Active state (Enabled)
+          const isActive = isProductPhoto || isMockup || isPhotoStudio || isHireModel || isCharacter;
           const isDisabled = !isActive;
 
-          // Badges
-          const showNewBadge = isProductPhoto || isMockup;
+          // Badge State (NEW vs SOON)
+          const showNewBadge = isProductPhoto || isMockup || isPhotoStudio || isHireModel || isCharacter;
           const showSoonBadge = isDisabled;
 
           return (

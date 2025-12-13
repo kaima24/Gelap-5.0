@@ -15,6 +15,20 @@ export const fileToBase64 = (file: File): Promise<string> => {
   });
 };
 
+// Helper to convert Blob to Base64
+export const blobToBase64 = (blob: Blob): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => {
+      const result = reader.result as string;
+      const base64 = result.split(',')[1];
+      resolve(base64);
+    };
+    reader.onerror = reject;
+    reader.readAsDataURL(blob);
+  });
+};
+
 export const verifyApiKey = async (apiKey: string): Promise<boolean> => {
   if (!apiKey) throw new Error("API Key is required");
 

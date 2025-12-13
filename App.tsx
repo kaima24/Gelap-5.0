@@ -8,17 +8,17 @@ import {
   Heart, 
   Palette, 
   Box, 
-  Menu,
-  X,
-  Home,
-  Key,
-  ShieldCheck,
+  Menu, 
+  X, 
+  Home, 
+  Key, 
+  ShieldCheck, 
   Layers, 
-  Activity,
-  UserPlus,
-  Baby,
-  Zap,
-  Languages,
+  Activity, 
+  UserPlus, 
+  Baby, 
+  Zap, 
+  Languages, 
   Globe
 } from 'lucide-react';
 import SplashScreen from './components/SplashScreen';
@@ -27,6 +27,9 @@ import HomeInterface from './components/HomeInterface';
 import GalleryInterface from './components/GalleryInterface';
 import ProductPhotoStudio from './components/ProductPhotoStudio';
 import MockupStudio from './components/MockupStudio';
+import PhotoStudio from './components/PhotoStudio';
+import HireModelStudio from './components/HireModelStudio';
+import CharacterStudio from './components/CharacterStudio'; // Import new component
 import ApiKeyModal from './components/ApiKeyModal';
 import Logo from './components/Logo';
 import { ToolType, ToolConfig } from './types';
@@ -51,14 +54,6 @@ const getTools = (t: any): ToolConfig[] => [
     requiresImage: true
   },
   {
-    id: ToolType.Mockup,
-    label: t['tool.mockup'],
-    icon: Box,
-    description: t['tool.mockup.desc'],
-    promptPlaceholder: 'e.g., A clean white t-shirt hanging on a wooden rack against a concrete wall...',
-    requiresImage: true
-  },
-  {
     id: ToolType.PhotoStudio,
     label: t['tool.photo'],
     icon: Camera,
@@ -73,6 +68,22 @@ const getTools = (t: any): ToolConfig[] => [
     description: t['tool.model.desc'],
     promptPlaceholder: 'e.g., A diverse group of young adults laughing at a rooftop party, warm lighting...',
     requiresImage: false
+  },
+  {
+    id: ToolType.CharacterGenerator,
+    label: t['tool.character'],
+    icon: UserPlus,
+    description: t['tool.character.desc'],
+    promptPlaceholder: 'e.g., An elven archer with silver hair, wearing intricate leather armor, forest background...',
+    requiresImage: true
+  },
+  {
+    id: ToolType.Mockup,
+    label: t['tool.mockup'],
+    icon: Box,
+    description: t['tool.mockup.desc'],
+    promptPlaceholder: 'e.g., A clean white t-shirt hanging on a wooden rack against a concrete wall...',
+    requiresImage: true
   },
   {
     id: ToolType.GeneratePose,
@@ -97,14 +108,6 @@ const getTools = (t: any): ToolConfig[] => [
     description: t['tool.mixmatch.desc'],
     promptPlaceholder: 'e.g., Combine a denim jacket with a floral summer dress, street style aesthetic...',
     requiresImage: true
-  },
-  {
-    id: ToolType.CharacterGenerator,
-    label: t['tool.character'],
-    icon: UserPlus,
-    description: t['tool.character.desc'],
-    promptPlaceholder: 'e.g., An elven archer with silver hair, wearing intricate leather armor, forest background...',
-    requiresImage: false
   },
   {
     id: ToolType.PreWedding,
@@ -149,6 +152,10 @@ function App() {
   // Usage State
   const [dailyUsage, setDailyUsage] = useState(0);
   
+  // App Version Info
+  const APP_VERSION = "v5.1.7";
+  const UPDATE_DATE = "Dec 13, 2025 • 18:10 PM";
+
   useEffect(() => {
     // Load usage on mount
     setDailyUsage(getDailyUsage());
@@ -252,7 +259,7 @@ function App() {
             onClick={() => setActiveToolId(ToolType.Home)}
           >
             <h1 className="text-lg font-bold tracking-wider text-white group-hover:text-lime-200 transition-colors">GELAP<span className="text-lime-500 group-hover:text-lime-400">5.0</span></h1>
-            <p className="text-[10px] text-zinc-500 uppercase tracking-widest group-hover:text-zinc-400">AI Creative Studio</p>
+            <p className="text-xs text-zinc-400 font-medium tracking-wide group-hover:text-white transition-colors">AI Creative Studio</p>
           </div>
         </div>
 
@@ -264,13 +271,16 @@ function App() {
               const isHome = tool.id === ToolType.Home;
               const isProductPhoto = tool.id === ToolType.ProductPhoto;
               const isMockup = tool.id === ToolType.Mockup;
+              const isPhotoStudio = tool.id === ToolType.PhotoStudio;
+              const isHireModel = tool.id === ToolType.HireModel;
+              const isCharacter = tool.id === ToolType.CharacterGenerator;
               
               // Allowed tools
-              const isActive = isHome || isProductPhoto || isMockup;
+              const isActive = isHome || isProductPhoto || isMockup || isPhotoStudio || isHireModel || isCharacter;
               const isDisabled = !isActive;
               
               // Badge logic
-              const showNewBadge = isProductPhoto || isMockup;
+              const showNewBadge = isProductPhoto || isMockup || isPhotoStudio || isHireModel || isCharacter;
               const showSoonBadge = isDisabled && !isHome;
 
               return (
@@ -320,6 +330,11 @@ function App() {
           {/* Sidebar Footer */}
           <div className="p-4 border-t border-zinc-800/50 flex flex-col gap-3 mt-auto">
              
+             {/* Version Info */}
+             <div className="text-center px-1 mb-1">
+                <p className="text-[9px] text-zinc-600 font-mono tracking-wide">{APP_VERSION} ({UPDATE_DATE})</p>
+             </div>
+
              {/* Language Switcher */}
              <div className="bg-zinc-900/30 border border-zinc-800/50 rounded-xl p-2 flex items-center justify-between backdrop-blur-sm">
                 <div className="flex items-center gap-2 pl-2">
@@ -452,6 +467,27 @@ function App() {
               lang={language}
             />
          </div>
+         <div style={{ display: activeToolId === ToolType.PhotoStudio ? 'block' : 'none' }} className="h-full">
+            <PhotoStudio
+              apiKey={apiKey}
+              onUsageUpdate={handleUsageUpdate}
+              lang={language}
+            />
+         </div>
+         <div style={{ display: activeToolId === ToolType.HireModel ? 'block' : 'none' }} className="h-full">
+            <HireModelStudio
+              apiKey={apiKey}
+              onUsageUpdate={handleUsageUpdate}
+              lang={language}
+            />
+         </div>
+         <div style={{ display: activeToolId === ToolType.CharacterGenerator ? 'block' : 'none' }} className="h-full">
+            <CharacterStudio
+              apiKey={apiKey}
+              onUsageUpdate={handleUsageUpdate}
+              lang={language}
+            />
+         </div>
 
          {/* Standard Components (Unmount on switch) */}
          {activeToolId === ToolType.Home && (
@@ -462,12 +498,11 @@ function App() {
             <GalleryInterface />
          )}
 
-         {!['home', 'gallery', 'product-photo', 'mockup'].includes(activeToolId) && (
+         {!['home', 'gallery', 'product-photo', 'mockup', 'photo-studio', 'hire-model', 'character-generator'].includes(activeToolId) && (
             <ToolInterface 
               key={activeTool.id} 
               tool={activeTool} 
-              apiKey={apiKey} 
-              onUsageUpdate={handleUsageUpdate}
+              apiKey={apiKey}
             />
          )}
       </main>
